@@ -1,0 +1,66 @@
+version: '3.7'
+
+services:
+  backend:
+    build: './backend'
+    container_name: 'file_caption_saver_backend'
+    ports:
+      - "4000:4000"
+    restart: 'always'
+    environment:
+      - "NODE_ENV=development"
+      - "sessionKey=secretKey"
+      - "MARIADB_DATABASE=file_caption_saver_db"
+      - "MARIADB_USER=mohammad"
+      - "MARIADB_PASSWORD=mohammad"
+      - "MARIADB_HOST=mariadb"
+    volumes:
+      - type: 'bind'
+        source: './backend'
+        target: '/usr/src/backend'
+      - type: 'bind'
+        source: './volumes/uploads'
+        target: '/usr/src/backend/uploads'
+    depends_on:
+      - 'mariadb'
+      - 'nginx'
+    
+  mariadb:
+    image: 'mariadb'
+    container_name: 'file_caption_saver_db'
+    expose:
+      - "3306"
+    environment:
+      - "MARIADB_DATABASE=file_caption_saver_db"
+      - "MARIADB_USER=mohammad"
+      - "MARIADB_PASSWORD=mohammad"
+      - "MARIADB_ROOT_PASSWORD=mohammad"
+    volumes:
+      - type: 'bind'
+        source: './database/database_data'
+        target: '/var/lib/mysql'
+
+  phpmyadmin:
+    image: 'phpmyadmin'
+    container_name: 'file_caption_saver_phpmyadmin'
+    restart: 'always'
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_ARBITRARY=1
+      - UPLOAD_LIMIT=300M
+    volumes:
+      - '/phpmyadmin'
+    depends_on:
+      - 'mariadb'
+
+  nginx:
+    build: './nginx'
+    container_name: 'file_caption_saver_nginx'
+    restart: 'always'
+    ports:
+      - "80:80"
+    volumes:
+      - type: 'bind'
+        source: './volumes/uploads'
+        target: '/backend/uploads'
