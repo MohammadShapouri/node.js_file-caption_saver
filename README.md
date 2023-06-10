@@ -8,6 +8,7 @@ _A web service powered by node.js and express.js for saving your files with capt
 ### Technologies which are used in this project:
 * Express.js
 * Sequelize
+* Joi
+* mariadb
 * Docker
 * Nginx
-* Joi
