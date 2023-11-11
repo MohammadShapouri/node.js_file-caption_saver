@@ -132,7 +132,15 @@ dist
 
 
 # ...
-backend/node_modules/**
-database/database_data/**
-database/database_backup/**
-volumes/uploads/**
+backend/node_modules/
+database/database_data/*.jpeg
+database/database_backup/*.jpeg
+volumes/uploads/*.jpeg
+
+database/database_data/*.jpg
+database/database_backup/*.jpg
+volumes/uploads/*.jpg
+
+database/database_data/*.png
+database/database_backup/*.png
+volumes/uploads/*.png
