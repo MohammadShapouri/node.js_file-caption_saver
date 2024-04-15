@@ -9,6 +9,6 @@ _A web service powered by node.js and express.js for saving your files with capt
 * Express.js
 * Sequelize
 * Joi
-* mariadb
+* MariaDB
 * Docker
 * Nginx
